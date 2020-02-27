@@ -1,0 +1,74 @@
+/*---(01)---*/
+/*---(a)---*/
+//1st step
+create type DEPTIT18108514
+/
+
+//2nd step
+create type EMPIT18108514 as object(
+	EMPNO char(6),
+	FIRSTNAME varchar(12),
+	LASTNAME varchar(15),
+	WORKDEPT REF DEPTIT18108514,
+	SEX char(1),
+	BIRTHDAY date,
+	SALARY number(8,2)
+)
+/
+
+create type DEPTIT18108514 as object(
+	DEPTNO char(3),
+	DEPTNAME varchar(36),
+	MGRNO REF EMPIT18108514,
+	ADMRDEPT REF DEPTIT18108514
+)
+/
+
+/*---(b)---*/
+create table OREMP of EMPIT18108514(
+	constraint OERMP_PK PRIMARY KEY(EMPNO),
+	constraint OREMP_FIRSTNAME_NN FIRSTNAME NOT NULL,
+	constraint OREMP_LASTNAME_NN LASTNAME NOT NULL,
+	constraint OREMP_SEX_CK CHECK (SEX='M' OR SEX='F' OR SEX='m' OR SEX='f')
+)
+/
+
+create table ORDEPT of DEPTIT18108514(
+	constraint ORDEPT_PK PRIMARY KEY(DEPTNO),
+	constraint ORDEPT_DEPTNAME_NN DEPTNAME NOT NULL,
+	constraint ORDEPT_MARNO_FK FOREIGN KEY(MGRNO) REFERENCES OREMP,
+	constraint ORDEPT_ADMRDEPT_FK FOREIGN KEY(ADMRDEPT) REFERENCES ORDEPT
+)
+/
+
+/*---(c)---*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
